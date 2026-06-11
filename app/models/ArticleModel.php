@@ -10,19 +10,19 @@ class ArticleModel {
         $errors = [];
 
         if (empty($data['Titre'])) {
-            $errors['Titre'] = 'Le titre est requis.';
+            $errors['Titre'] = 'The title is required.';
         }
 
         if (empty($data['Resume'])) {
-            $errors['Resume'] = 'Le résumé est requis.';
+            $errors['Resume'] = 'The abstract is required.';
         }
 
         if (empty($data['Contenu'])) {
-            $errors['Contenu'] = 'Le contenu est requis.';
+            $errors['Contenu'] = 'The content is required.';
         }
 
         if (empty($data['Auteur'])) {
-            $errors['Auteur'] = "L'auteur est requis.";
+            $errors['Auteur'] = "The author is required.";
         }
 
         return $errors;

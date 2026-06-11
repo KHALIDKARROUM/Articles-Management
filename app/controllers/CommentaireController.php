@@ -17,7 +17,7 @@ class CommentaireController {
             ];
             $resultat = $this->model->ajouterCommentaire($data);
             if ($resultat === true) {
-                $_SESSION['message'] = "Votre commentaire a été ajouté.";
+                $_SESSION['message'] = "Your comment was added.";
             } else {
                 $_SESSION['error'] = $resultat['bdd'];
             }

@@ -1,37 +1,30 @@
-<?php
-include VIEW_PATH . '/layouts/haut.php';
-?>
+<?php include VIEW_PATH . '/layouts/haut.php'; ?>
 
-
-<!-- Le reste de votre code HTML... -->
-
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <h1 class="text-center mb-4">Connexion</h1>
-            
-            <?php if (isset($_SESSION['error'])): ?>
-                <div class="alert alert-danger"><?= $_SESSION['error'] ?></div>
-                <?php unset($_SESSION['error']); ?>
-            <?php endif; ?>
-
-            <!-- Ajoutez l'action au formulaire -->
-             <form method="post" action="<?= BASE_PATH_SERVER ?>/index.php/login">
-   
-                <div class="form-group mb-3">
-                    <label for="login">Email</label>
-                    <input type="email" class="form-control" id="login" name="login" required>
-                </div>
-                
-                <div class="form-group mb-3">
-                    <label for="password">Mot de passe</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
-                </div>
-                
-                <button type="submit" class="btn btn-primary w-100">Se connecter</button>
-            </form>
-        </div>
+<section class="auth-layout">
+    <div class="auth-intro">
+        <p class="page-header__eyebrow">Sign in</p>
+        <h1>Manage scientific articles with more clarity.</h1>
+        <p>Sign in to add articles, manage categories, and keep the platform content organized.</p>
     </div>
-</div>
+
+    <form method="post" action="<?= BASE_PATH_SERVER ?>/index.php/login" class="auth-panel">
+        <h2>Sign in</h2>
+        <p class="auth-panel__subtitle">Use your institutional email address.</p>
+
+        <?php flashMessage('error', 'danger'); ?>
+
+        <div class="field field-full mb-3">
+            <label for="login">Email</label>
+            <input type="email" id="login" name="login" autocomplete="username" required>
+        </div>
+
+        <div class="field field-full mb-3">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" autocomplete="current-password" required>
+        </div>
+
+        <button type="submit" class="button-primary">Sign in</button>
+    </form>
+</section>
 
 <?php include VIEW_PATH . '/layouts/bas.php'; ?>

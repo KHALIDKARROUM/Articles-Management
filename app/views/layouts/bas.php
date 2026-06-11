@@ -1,5 +1,9 @@
+    </main>
 
-<div class="bas">&copy; copyright: Université XYZ 2025<br/>Faculté des Sciences<br/>contact@univ-xyz.ma
-</div>
+    <footer class="app-footer">
+        <strong>ArticleFlow</strong>
+        <span>Scientific Publishing Workspace</span>
+        <a href="mailto:contact@univ-xyz.ma">contact@articleflow.ma</a>
+    </footer>
 </body>
 </html>

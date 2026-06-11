@@ -1,6 +1,6 @@
 <?php
 if (!function_exists('afficherDate')) {
-    function afficherDate($lang = "FR") {
+    function afficherDate($lang = "EN") {
         $jours = [
             "FR" => ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
             "EN" => ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],

@@ -1,56 +1,45 @@
-function getClientDate() {
+document.addEventListener("DOMContentLoaded", () => {
+    const toggle = document.querySelector(".nav-toggle");
+    const nav = document.querySelector("#primary-nav");
+    const themeToggle = document.querySelector("[data-theme-toggle]");
+    const themeLabel = document.querySelector("[data-theme-toggle-label]");
 
-	const d= new Date();
-	const jours = new Array("Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi");
-	const mois = new Array("Janvier","Février","Mars", "Avril","Mai","juin","Juillet","Aôut","Septembre","Octobre","Novembre","Décembre");
+    const setTheme = (theme) => {
+        document.documentElement.dataset.theme = theme;
+        localStorage.setItem("theme", theme);
 
-	return jours[d.getDay()] +" "+ d.getDate() +" "+ mois[d.getMonth()] +" "+ d.getFullYear();
-}
+        if (themeToggle) {
+            themeToggle.setAttribute("aria-pressed", String(theme === "dark"));
+        }
 
+        if (themeLabel) {
+            themeLabel.textContent = theme === "dark" ? "Light" : "Dark";
+        }
+    };
 
-function ValiderLeFormulaire() {
-	let valide = true;
-	document.getElementById("ErrCode").innerHTML ="";
-	document.getElementById("ErrNom").innerHTML ="";
-	document.getElementById("ErrPrenom").innerHTML ="";
-	document.getElementById("ErrNote").innerHTML ="";
+    setTheme(document.documentElement.dataset.theme || "light");
 
+    if (toggle && nav) {
+        toggle.addEventListener("click", () => {
+            const isOpen = nav.classList.toggle("is-open");
+            toggle.setAttribute("aria-expanded", String(isOpen));
+        });
+    }
 
-	if (document.myForm.Code.value==""){
-		valide =false;
-		document.getElementById("ErrCode").innerHTML="Le code est obligatoire";
-	}
-	if (document.myForm.Nom.value==""){
-		valide =false;
-		document.getElementById("ErrNom").innerHTML="Le nom est obligatoire";
-	}
-	if (document.myForm.Prenom.value==""){
-		valide =false;
-		document.getElementById("ErrPrenom").innerHTML="Le prénom est obligatoire";
-	}
-	if (document.myForm.Note.value==""){
-		valide =false;
-		document.getElementById("ErrNote").innerHTML="La note est obligatoire";
-	}
-	if (isNaN(document.myForm.Note.value)){
-		valide =false;
-		document.getElementById("ErrNote").innerHTML="La note doit être un nombre";
-	}
-	else if (eval(document.myForm.Note.value) <0 || eval(document.myForm.Note.value)> 20){
-		valide =false;
-		document.getElementById("ErrNote").innerHTML="La note doit être entre 0 et 20";
-	}
-	return valide;
-}
+    if (themeToggle) {
+        themeToggle.addEventListener("click", () => {
+            const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+            setTheme(nextTheme);
+        });
+    }
 
+    document.querySelectorAll("[data-confirm]").forEach((element) => {
+        element.addEventListener("click", (event) => {
+            const message = element.getAttribute("data-confirm");
 
-window.addEventListener("DOMContentLoaded", function (event) {
-
-	document.getElementById("LaDate").innerHTML =  getClientDate();
-
-	document.myForm.addEventListener("submit", (event) => {
-		if(!ValiderLeFormulaire()) event.preventDefault();
-	});
-
-
+            if (message && !window.confirm(message)) {
+                event.preventDefault();
+            }
+        });
+    });
 });

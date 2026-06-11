@@ -14,8 +14,9 @@ class UserController {
             $user = $this->model->authenticate($_POST['login'], $_POST['password']);
 
             if ($user) {
+                session_regenerate_id(true);
                 $_SESSION['message'] = "Welcome";
-                $_SESSION['user']['id'] == $user['id'];
+                $_SESSION['user']['id'] = $user['id'];
                 $_SESSION['user']['nom'] = $user['nom'];
                 $_SESSION['user']['prenom'] = $user['prenom'];
                 $_SESSION['user']['login'] = $user['login'];
@@ -25,7 +26,7 @@ class UserController {
                 header('Location: index.php');
                 exit;
             } else {
-                $errors = $user;
+                $_SESSION['error'] = "Invalid email or password.";
             }
         }
 
@@ -33,6 +34,25 @@ class UserController {
     }
 
     public function options() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $language = 'EN';
+            $color = $_POST['background_color'] ?? '#2457c5';
+            $cookiePath = BASE_PATH_SERVER ?: '/';
+
+            if (!preg_match('/^#[0-9a-fA-F]{6}$/', $color)) {
+                $color = '#2457c5';
+            }
+
+            setcookie('language', $language, time() + 60 * 60 * 24 * 365, $cookiePath);
+            setcookie('background_color', $color, time() + 60 * 60 * 24 * 365, $cookiePath);
+            $_COOKIE['language'] = $language;
+            $_COOKIE['background_color'] = $color;
+            $_SESSION['message'] = "Preferences saved.";
+
+            header('Location: ' . BASE_PATH_SERVER . '/index.php/options');
+            exit;
+        }
+
         include VIEW_PATH . '/user/options.php';
     }
 
@@ -64,7 +84,7 @@ class UserController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $result = $this->model->createUser($_POST);
             if ($result === true) {
-                $_SESSION['message'] = "Utilisateur créé avec succès";
+                $_SESSION['message'] = "User created successfully.";
                 header('Location: index.php/user');
                 exit;
             } else {
@@ -76,7 +96,7 @@ class UserController {
 
     public function modifierUtilisateur($id) {
         if (!$this->isAdmin() && $_SESSION['user']['id'] != $id) {
-            $_SESSION['error'] = "Accès non autorisé";
+            $_SESSION['error'] = "Unauthorized access.";
             header('Location: index.php');
             exit;
         }
@@ -84,7 +104,7 @@ class UserController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $result = $this->model->updateUser($id, $_POST);
             if ($result === true) {
-                $_SESSION['message'] = "Utilisateur mis à jour avec succès";
+                $_SESSION['message'] = "User updated successfully.";
 
                 if ($_SESSION['user']['id'] == $id) {
                     $_SESSION['user']['nom'] = $_POST['nom'];
@@ -101,7 +121,7 @@ class UserController {
 
         $user = $this->model->getUserById($id);
         if (!$user) {
-            $_SESSION['error'] = "Utilisateur non trouvé";
+            $_SESSION['error'] = "User not found.";
             header('Location: index.php/user');
             exit;
         }
@@ -113,15 +133,15 @@ class UserController {
         $this->checkAdmin();
 
         if ($_SESSION['user']['id'] == $id) {
-            $_SESSION['error'] = "Vous ne pouvez pas supprimer votre propre compte";
+            $_SESSION['error'] = "You cannot delete your own account.";
             header('Location: index.php/user');
             exit;
         }
 
         if ($this->model->deleteUser($id)) {
-            $_SESSION['message'] = "Utilisateur supprimé avec succès";
+            $_SESSION['message'] = "User deleted successfully.";
         } else {
-            $_SESSION['error'] = "Erreur lors de la suppression";
+            $_SESSION['error'] = "Could not delete the user.";
         }
 
         header('Location: index.php/user');
@@ -134,7 +154,7 @@ class UserController {
 
     private function checkAdmin() {
         if (!$this->isAdmin()) {
-            $_SESSION['error'] = "Accès refusé : droits insuffisants";
+            $_SESSION['error'] = "Access denied: insufficient permissions.";
             header('Location: index.php');
             exit;
         }

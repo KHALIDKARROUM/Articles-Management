@@ -1,19 +1,10 @@
-<?php
-// Ligne ABSOLUMENT REQUISE en tout premier
+<?php include VIEW_PATH . '/layouts/haut.php'; ?>
 
-
-// Maintenant les constantes sont disponibles
-include VIEW_PATH . '/layouts/haut.php';
-?>
-
-<div class="container mt-5 text-center">
-    <h1 class="display-1 text-danger">404</h1>
-    <h2>Page non trouvée</h2>
-    <p class="lead">La page que vous cherchez n'existe pas ou a été déplacée.</p>
-    <a href="<?= BASE_PATH_SERVER ?>/index.php" class="btn btn-primary">
-        <i class="fas fa-home"></i> Retour à l'accueil
-    </a>
-</div>
+<section class="empty-state">
+    <p class="page-header__eyebrow">Error 404</p>
+    <h1>Page not found</h1>
+    <p>The page you requested does not exist or has been moved.</p>
+    <a href="<?= BASE_PATH_SERVER ?>/index.php" class="button button-primary">Back home</a>
+</section>
 
 <?php include VIEW_PATH . '/layouts/bas.php'; ?>
-

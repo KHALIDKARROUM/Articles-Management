@@ -23,7 +23,7 @@ class ArticleController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $resultat = $this->articleModel->ajouterArticle($_POST);
             if ($resultat === true) {
-                $_SESSION['message'] = "L'article a été ajouté avec succès.";
+                $_SESSION['message'] = "The article was added successfully.";
                 header('Location: ' . BASE_PATH_SERVER . '/index.php/article');
                 exit;
             } else {
@@ -38,7 +38,7 @@ class ArticleController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $resultat = $this->articleModel->modifierArticle($_POST, $id);
             if ($resultat === true) {
-                $_SESSION['message'] = "L'article a été modifié avec succès.";
+                $_SESSION['message'] = "The article was updated successfully.";
                 header('Location: ' . BASE_PATH_SERVER . '/index.php/article/' . $id);
                 exit;
             } else {
@@ -53,7 +53,7 @@ class ArticleController {
     public function supprimerArticle($id) {
         $resultat = $this->articleModel->supprimerArticle($id);
         if ($resultat === true) {
-            $_SESSION['message'] = "L'article a été supprimé avec succès.";
+            $_SESSION['message'] = "The article was deleted successfully.";
         } else {
             $_SESSION['error'] = $resultat;
         }

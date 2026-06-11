@@ -19,6 +19,6 @@ try {
 } catch (PDOException $e) {
     error_log("[" . date('Y-m-d H:i:s') . "] DB Error: " . $e->getMessage());
     header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error');
-    die("Maintenance en cours. Veuillez réessayer ultérieurement.");
+    die("Maintenance in progress. Please try again later.");
 }
 

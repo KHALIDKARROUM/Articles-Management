@@ -1,61 +1,59 @@
 <?php include VIEW_PATH . '/layouts/haut.php'; ?>
 
-<div class="container mt-4">
-    <h1>Modifier l'utilisateur</h1>
-    
-    <?php if (!empty($errors)): ?>
-        <div class="alert alert-danger">
-            <ul>
-                <?php foreach ($errors as $error): ?>
-                    <li><?= $error ?></li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    <?php endif; ?>
+<section class="page-header">
+    <div class="page-header__content">
+        <p class="page-header__eyebrow">Account</p>
+        <h1>Edit user</h1>
+        <p>Update account information and access level.</p>
+    </div>
+</section>
 
-    <form method="post" action="<?= BASE_PATH_SERVER ?>/index.php/user/edit/<?= $user['id'] ?>">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group mb-3">
-                    <label for="nom">Nom</label>
-                    <input type="text" class="form-control" id="nom" name="nom" 
-                           value="<?= htmlspecialchars($user['nom']) ?>" required>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group mb-3">
-                    <label for="prenom">Prénom</label>
-                    <input type="text" class="form-control" id="prenom" name="prenom" 
-                           value="<?= htmlspecialchars($user['prenom']) ?>" required>
-                </div>
-            </div>
+<?php if (!empty($errors)): ?>
+    <div class="alert alert-danger">
+        <?php foreach ($errors as $error): ?>
+            <div><?= e($error) ?></div>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
+
+<form method="post" action="<?= BASE_PATH_SERVER ?>/index.php/user/edit/<?= e($user['id']) ?>" class="form-panel">
+    <div class="form-grid">
+        <div class="field">
+            <label for="nom">Last name</label>
+            <input type="text" id="nom" name="nom" value="<?= e($user['nom']) ?>" required>
         </div>
 
-        <div class="form-group mb-3">
+        <div class="field">
+            <label for="prenom">First name</label>
+            <input type="text" id="prenom" name="prenom" value="<?= e($user['prenom']) ?>" required>
+        </div>
+
+        <div class="field field-full">
             <label for="login">Email</label>
-            <input type="email" class="form-control" id="login" name="login" 
-                   value="<?= htmlspecialchars($user['login']) ?>" required>
+            <input type="email" id="login" name="login" value="<?= e($user['login']) ?>" autocomplete="username" required>
         </div>
 
-        <div class="form-group mb-3">
-            <label for="password">Nouveau mot de passe (laisser vide pour ne pas changer)</label>
-            <input type="password" class="form-control" id="password" name="password">
+        <div class="field">
+            <label for="password">New password</label>
+            <input type="password" id="password" name="password" autocomplete="new-password">
+            <p class="field-help">Leave this blank to keep the current password.</p>
         </div>
 
         <?php if ($_SESSION['user']['role'] === 'admin'): ?>
-            <div class="form-group mb-3">
-                <label for="role">Rôle</label>
-                <select class="form-control" id="role" name="role" required>
-                    <option value="user" <?= $user['role'] === 'user' ? 'selected' : '' ?>>Utilisateur</option>
-                    <option value="admin" <?= $user['role'] === 'admin' ? 'selected' : '' ?>>Administrateur</option>
+            <div class="field">
+                <label for="role">Role</label>
+                <select id="role" name="role" required>
+                    <option value="user" <?= $user['role'] === 'user' ? 'selected' : '' ?>>User</option>
+                    <option value="admin" <?= $user['role'] === 'admin' ? 'selected' : '' ?>>Administrator</option>
                 </select>
             </div>
         <?php endif; ?>
+    </div>
 
-        <button type="submit" class="btn btn-primary">Mettre à jour</button>
-        <a href="<?= BASE_PATH_SERVER ?>/index.php/user" class="btn btn-secondary">Annuler</a>
-    </form>
-</div>
+    <div class="form-actions mt-3">
+        <button type="submit" class="button-primary">Update</button>
+        <a href="<?= BASE_PATH_SERVER ?>/index.php/user" class="button">Cancel</a>
+    </div>
+</form>
 
 <?php include VIEW_PATH . '/layouts/bas.php'; ?>
-

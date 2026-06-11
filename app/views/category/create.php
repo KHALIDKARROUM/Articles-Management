@@ -1,27 +1,32 @@
 <?php include VIEW_PATH . '/layouts/haut.php'; ?>
 
-<div class="container">
-    <h1>Ajouter une catégorie</h1>
-    
-    <?php if (isset($_SESSION['error'])): ?>
-        <div class="alert alert-danger"><?= $_SESSION['error'] ?></div>
-        <?php unset($_SESSION['error']); ?>
-    <?php endif; ?>
+<section class="page-header">
+    <div class="page-header__content">
+        <p class="page-header__eyebrow">New category</p>
+        <h1>Add category</h1>
+        <p>Choose a short name and a useful description for people classifying articles.</p>
+    </div>
+</section>
 
-    <form action="<?= BASE_PATH_SERVER ?>/index.php/category/store" method="POST">
-        <div class="form-group">
-            <label for="name">Nom:</label>
-            <input type="text" class="form-control" id="name" name="name" required>
+<?php flashMessage('error', 'danger'); ?>
+
+<form action="<?= BASE_PATH_SERVER ?>/index.php/category/store" method="POST" class="form-panel">
+    <div class="form-grid">
+        <div class="field field-full">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
         </div>
-        
-        <div class="form-group">
-            <label for="description">Description:</label>
-            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+
+        <div class="field field-full">
+            <label for="description">Description</label>
+            <textarea id="description" name="description"></textarea>
         </div>
-        
-        <button type="submit" class="btn btn-primary">Enregistrer</button>
-        <a href="<?= BASE_PATH_SERVER ?>/index.php/category" class="btn btn-secondary">Annuler</a>
-    </form>
-</div>
+    </div>
+
+    <div class="form-actions mt-3">
+        <button type="submit" class="button-primary">Save</button>
+        <a href="<?= BASE_PATH_SERVER ?>/index.php/category" class="button">Cancel</a>
+    </div>
+</form>
 
 <?php include VIEW_PATH . '/layouts/bas.php'; ?>

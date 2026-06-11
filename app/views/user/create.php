@@ -1,55 +1,56 @@
 <?php include VIEW_PATH . '/layouts/haut.php'; ?>
 
-<div class="container mt-4">
-    <h1>Créer un utilisateur</h1>
-    
-    <?php if (!empty($errors)): ?>
-        <div class="alert alert-danger">
-            <ul>
-                <?php foreach ($errors as $error): ?>
-                    <li><?= $error ?></li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    <?php endif; ?>
+<section class="page-header">
+    <div class="page-header__content">
+        <p class="page-header__eyebrow">Account</p>
+        <h1>Create user</h1>
+        <p>Add an account with the right role for this person's responsibilities.</p>
+    </div>
+</section>
 
- <form method="post" action="<?= BASE_PATH_SERVER ?>/index.php/user/create">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group mb-3">
-                    <label for="nom">Nom</label>
-                    <input type="text" class="form-control" id="nom" name="nom" required>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group mb-3">
-                    <label for="prenom">Prénom</label>
-                    <input type="text" class="form-control" id="prenom" name="prenom" required>
-                </div>
-            </div>
+<?php if (!empty($errors)): ?>
+    <div class="alert alert-danger">
+        <?php foreach ($errors as $error): ?>
+            <div><?= e($error) ?></div>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
+
+<form method="post" action="<?= BASE_PATH_SERVER ?>/index.php/user/create" class="form-panel">
+    <div class="form-grid">
+        <div class="field">
+            <label for="nom">Last name</label>
+            <input type="text" id="nom" name="nom" required>
         </div>
 
-        <div class="form-group mb-3">
+        <div class="field">
+            <label for="prenom">First name</label>
+            <input type="text" id="prenom" name="prenom" required>
+        </div>
+
+        <div class="field field-full">
             <label for="login">Email</label>
-            <input type="email" class="form-control" id="login" name="login" required>
+            <input type="email" id="login" name="login" autocomplete="username" required>
         </div>
 
-        <div class="form-group mb-3">
-            <label for="password">Mot de passe</label>
-            <input type="password" class="form-control" id="password" name="password" required>
+        <div class="field">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" autocomplete="new-password" required>
         </div>
 
-        <div class="form-group mb-3">
-            <label for="role">Rôle</label>
-            <select class="form-control" id="role" name="role" required>
-                <option value="user">Utilisateur</option>
-                <option value="admin">Administrateur</option>
+        <div class="field">
+            <label for="role">Role</label>
+            <select id="role" name="role" required>
+                <option value="user">User</option>
+                <option value="admin">Administrator</option>
             </select>
         </div>
+    </div>
 
-        <button type="submit" class="">Enregistrer</button>
-        <a href="<?= BASE_PATH_SERVER ?>/index.php/user" class="btn btn-secondary">Annuler</a>
-    </form>
-</div>
+    <div class="form-actions mt-3">
+        <button type="submit" class="button-primary">Save</button>
+        <a href="<?= BASE_PATH_SERVER ?>/index.php/user" class="button">Cancel</a>
+    </div>
+</form>
 
 <?php include VIEW_PATH . '/layouts/bas.php'; ?>

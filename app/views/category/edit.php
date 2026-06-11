@@ -1,32 +1,32 @@
 <?php include VIEW_PATH . '/layouts/haut.php'; ?>
 
-<div class="container">
-    <h1>Modifier la catégorie</h1>
-    
-    <?php if (isset($_SESSION['error'])): ?>
-        <div class="alert alert-danger"><?= $_SESSION['error'] ?></div>
-        <?php unset($_SESSION['error']); ?>
-    <?php endif; ?>
+<section class="page-header">
+    <div class="page-header__content">
+        <p class="page-header__eyebrow">Edit</p>
+        <h1>Edit category</h1>
+        <p>Update this category name and description.</p>
+    </div>
+</section>
 
-    <form action="<?= BASE_PATH_SERVER ?>/index.php/category/<?= $category['id'] ?>" method="POST">
-        <input type="hidden" name="_method" value="PUT">
-        
-        <div class="form-group">
-            <label for="name">Nom:</label>
-            <input type="text" class="form-control" id="name" name="name" 
-                   value="<?= htmlspecialchars($category['name']) ?>" required>
-        </div>
-        
-        <div class="form-group">
-            <label for="description">Description:</label>
-            <textarea class="form-control" id="description" name="description" rows="3"><?= htmlspecialchars($category['description'] ?? '') ?></textarea>
+<?php flashMessage('error', 'danger'); ?>
+
+<form action="<?= BASE_PATH_SERVER ?>/index.php/category/<?= e($category['id']) ?>/update" method="POST" class="form-panel">
+    <div class="form-grid">
+        <div class="field field-full">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" value="<?= e($category['name']) ?>" required>
         </div>
 
-        <
-       
-        <button type="submit" class="btn btn-primary" >Mettre à jour</button>
-        <a href="<?= BASE_PATH ?>/index.php/category/<?= $category['id'] ?>" class="btn btn-secondary">Annuler</a>
-    </form>
-</div>
+        <div class="field field-full">
+            <label for="description">Description</label>
+            <textarea id="description" name="description"><?= e($category['description'] ?? '') ?></textarea>
+        </div>
+    </div>
+
+    <div class="form-actions mt-3">
+        <button type="submit" class="button-primary">Update</button>
+        <a href="<?= BASE_PATH_SERVER ?>/index.php/category/<?= e($category['id']) ?>" class="button">Cancel</a>
+    </div>
+</form>
 
 <?php include VIEW_PATH . '/layouts/bas.php'; ?>

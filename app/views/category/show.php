@@ -1,32 +1,32 @@
 <?php include VIEW_PATH . '/layouts/haut.php'; ?>
 
-<div class="container">
-    <h1><?= htmlspecialchars($category['name']) ?></h1>
-    
-    <?php if (isset($_SESSION['message'])): ?>
-        <div class="alert alert-success"><?= $_SESSION['message'] ?></div>
-        <?php unset($_SESSION['message']); ?>
-    <?php endif; ?>
-    
-    <?php if (isset($_SESSION['error'])): ?>
-        <div class="alert alert-danger"><?= $_SESSION['error'] ?></div>
-        <?php unset($_SESSION['error']); ?>
-    <?php endif; ?>
-
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Description</h5>
-            <p class="card-text"><?= htmlspecialchars($category['description'] ?? 'Aucune description') ?></p>
-        </div>
+<section class="page-header">
+    <div class="page-header__content">
+        <p class="page-header__eyebrow">Category</p>
+        <h1><?= e($category['name']) ?></h1>
+        <p><?= e($category['description'] ?? 'No description') ?></p>
     </div>
 
-    <div class="mt-3">
-        <a href="<?= BASE_PATH_SERVER ?>/index.php/category/<?= $category['id'] ?>/edit" class="btn btn-warning">Modifier</a>
-        <form action="<?= BASE_PATH_SERVER ?>/index.php/category/<?= $category['id'] ?>/delete" method="POST" style="display:inline;">
-            <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr?')">Supprimer</button>
+    <div class="detail-actions">
+        <a href="<?= BASE_PATH_SERVER ?>/index.php/category" class="button">Back</a>
+        <a href="<?= BASE_PATH_SERVER ?>/index.php/category/<?= e($category['id']) ?>/edit" class="button button-warning">Edit</a>
+        <form action="<?= BASE_PATH_SERVER ?>/index.php/category/<?= e($category['id']) ?>/delete" method="POST" class="inline-form">
+            <button type="submit" class="button-danger" data-confirm="Delete this category?">Delete</button>
         </form>
-        <a href="<?= BASE_PATH_SERVER ?>/index.php/category" class="btn btn-secondary">Retour</a>
     </div>
-</div>
+</section>
+
+<?php flashMessage('message', 'success'); ?>
+<?php flashMessage('error', 'danger'); ?>
+
+<section class="surface">
+    <div class="surface__header">
+        <h2 class="surface__title">Details</h2>
+    </div>
+    <div class="surface__body">
+        <p class="meta">Identifier: #<?= e($category['id']) ?></p>
+        <p><?= e($category['description'] ?? 'No description') ?></p>
+    </div>
+</section>
 
 <?php include VIEW_PATH . '/layouts/bas.php'; ?>
